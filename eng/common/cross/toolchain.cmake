@@ -85,13 +85,13 @@ endif()
 
 if(TARGET_ARCH_NAME STREQUAL "armel")
   if(DEFINED TIZEN_TOOLCHAIN) # For Tizen only
-    add_link_options("-B${CROSS_ROOTFS}/usr/lib/gcc/${TIZEN_TOOLCHAIN}")
-    add_link_options("-L${CROSS_ROOTFS}/lib")
-    add_link_options("-L${CROSS_ROOTFS}/usr/lib")
-    add_link_options("-L${CROSS_ROOTFS}/usr/lib/gcc/${TIZEN_TOOLCHAIN}")
+    add_linker_flag("-B${CROSS_ROOTFS}/usr/lib/gcc/${TIZEN_TOOLCHAIN}")
+    add_linker_flag("-L${CROSS_ROOTFS}/lib")
+    add_linker_flag("-L${CROSS_ROOTFS}/usr/lib")
+    add_linker_flag("-L${CROSS_ROOTFS}/usr/lib/gcc/${TIZEN_TOOLCHAIN}")
   endif()
 elseif(TARGET_ARCH_NAME STREQUAL "x86")
-  add_link_options(-m32)
+  add_linker_flag(-m32)
 endif()
 
 # Specify compile options
