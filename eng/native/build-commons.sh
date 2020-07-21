@@ -153,8 +153,8 @@ build_native()
             cmake_command="emcmake $cmake_command"
         fi
 
-        echo "Executing $cmake_command --build \"$intermediatesDir\" --target install -j $__NumProc"
-        $cmake_command --build "$intermediatesDir" --target install -j "$__NumProc"
+        echo "Executing $cmake_command --build \"$intermediatesDir\" --target install -- -j $__NumProc"
+        $cmake_command --build "$intermediatesDir" --target install -- -j "$__NumProc"
     fi
 
     local exit_code="$?"
