@@ -7,15 +7,15 @@ if (CLR_CMAKE_TARGET_WIN32)
 
 endif (CLR_CMAKE_TARGET_WIN32)
 
-add_library_clr(cee_wks_obj OBJECT ${VM_SOURCES_WKS})
+add_library_clr(cee_wks_core OBJECT ${VM_SOURCES_WKS} ${VM_SOURCES_WKS_ARCH_ASM})
+
+add_library_clr(cee_wks_obj OBJECT ${VM_SOURCES_WKS_SPECIAL})
 
 add_custom_target(preprocessd_asm DEPENDS ${VM_WKS_ARCH_ASM_OBJECTS})
-add_dependencies(cee_wks_obj preprocessd_asm)
-add_dependencies(cee_wks_obj preprocessd_asm eventing_headers)
-
-add_custom_target(preprocessd_asm DEPENDS ${VM_WKS_ARCH_ASM_OBJECTS})
+add_dependencies(cee_wks_core preprocessd_asm)
 add_dependencies(cee_wks_obj preprocessd_asm)
 
+target_precompile_header(TARGET cee_wks_core HEADER common.h)
 target_precompile_header(TARGET cee_wks_obj HEADER common.h)
 
 add_library(cee_wks INTERFACE)
@@ -25,6 +25,9 @@ if (MSVC)
     # mscorlib.cpp does not compile with precompiled header file
     set_source_files_properties(../mscorlib.cpp PROPERTIES COMPILE_FLAGS "/Y-")
 endif()
+
+add_dependencies(cee_wks_core eventing_headers)
+add_dependencies(cee_wks_obj eventing_headers)
 
 if (CLR_CMAKE_TARGET_WIN32)
 
@@ -56,7 +59,8 @@ if (CLR_CMAKE_TARGET_WIN32)
       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/AsmConstants.inc
     )
 
-    add_dependencies(cee_wks asmconstants_inc)
+    add_dependencies(cee_wks_core asmconstants_inc)
+    add_dependencies(cee_wks_obj asmconstants_inc)
 
   endif(NOT CLR_CMAKE_HOST_ARCH_ARM AND NOT CLR_CMAKE_HOST_ARCH_ARM64)
 
