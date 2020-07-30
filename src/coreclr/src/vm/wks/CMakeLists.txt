@@ -11,6 +11,7 @@ add_library_clr(cee_wks_obj OBJECT ${VM_SOURCES_WKS})
 
 add_custom_target(preprocessd_asm DEPENDS ${VM_WKS_ARCH_ASM_OBJECTS})
 add_dependencies(cee_wks_obj preprocessd_asm)
+add_dependencies(cee_wks_obj preprocessd_asm eventing_headers)
 
 add_custom_target(preprocessd_asm DEPENDS ${VM_WKS_ARCH_ASM_OBJECTS})
 add_dependencies(cee_wks_obj preprocessd_asm)
@@ -24,7 +25,6 @@ if (MSVC)
     # mscorlib.cpp does not compile with precompiled header file
     set_source_files_properties(../mscorlib.cpp PROPERTIES COMPILE_FLAGS "/Y-")
 endif()
-add_dependencies(cee_wks eventing_headers)
 
 if (CLR_CMAKE_TARGET_WIN32)
 
