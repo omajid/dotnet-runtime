@@ -110,7 +110,7 @@ set(CORECLR_LIBRARIES
     utilcode
     v3binder
     libraries-native
-    System.Globalization.Native-Static
+    System.Globalization.Native-static
     interop
 )
 
