@@ -8,18 +8,10 @@ if (CLR_CMAKE_TARGET_WIN32)
 endif (CLR_CMAKE_TARGET_WIN32)
 
 add_library_clr(cee_wks_core OBJECT ${VM_SOURCES_WKS} ${VM_SOURCES_WKS_ARCH_ASM})
-
 add_library_clr(cee_wks_obj OBJECT ${VM_SOURCES_WKS_SPECIAL})
-
-add_custom_target(preprocessd_asm DEPENDS ${VM_WKS_ARCH_ASM_OBJECTS})
-add_dependencies(cee_wks_core preprocessd_asm)
-add_dependencies(cee_wks_obj preprocessd_asm)
 
 target_precompile_header(TARGET cee_wks_core HEADER common.h)
 target_precompile_header(TARGET cee_wks_obj HEADER common.h)
-
-add_library(cee_wks INTERFACE)
-target_sources(cee_wks INTERFACE $<TARGET_OBJECTS:cee_wks_obj> ${VM_WKS_ARCH_ASM_OBJECTS})
 
 if (MSVC)
     # mscorlib.cpp does not compile with precompiled header file
@@ -65,3 +57,10 @@ if (CLR_CMAKE_TARGET_WIN32)
   endif(NOT CLR_CMAKE_HOST_ARCH_ARM AND NOT CLR_CMAKE_HOST_ARCH_ARM64)
 
 endif (CLR_CMAKE_TARGET_WIN32)
+
+add_custom_target(preprocessd_asm DEPENDS ${VM_WKS_ARCH_ASM_OBJECTS})
+add_dependencies(cee_wks_core preprocessd_asm)
+add_dependencies(cee_wks_obj preprocessd_asm)
+
+add_library(cee_wks INTERFACE)
+target_sources(cee_wks INTERFACE $<TARGET_OBJECTS:cee_wks_obj> ${VM_WKS_ARCH_ASM_OBJECTS})

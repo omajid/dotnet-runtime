@@ -23,22 +23,14 @@ if (CLR_CMAKE_TARGET_WIN32)
 
     set_source_files_properties(${ASM_FILE} PROPERTIES COMPILE_OPTIONS "${ASM_OPTIONS}")
 
-<<<<<<< HEAD
-    add_library_clr(cordbee_wks ${CORDBEE_SOURCES_WKS} ${ASM_FILE})
-=======
     add_library_clr(cordbee_wks_obj OBJECT ${CORDBEE_SOURCES_WKS} ${ASM_FILE})
->>>>>>> Use interface libraries to localize changes to support object libraries on old CMake versions.
 
   endif()
 
 else ()
 
   if(CLR_CMAKE_HOST_ARCH_AMD64 OR CLR_CMAKE_HOST_ARCH_ARM OR CLR_CMAKE_HOST_ARCH_ARM64 OR CLR_CMAKE_HOST_ARCH_I386)
-<<<<<<< HEAD
-    add_library_clr(cordbee_wks ${CORDBEE_SOURCES_WKS} ../${ARCH_SOURCES_DIR}/dbghelpers.S)
-=======
     add_library_clr(cordbee_wks_obj OBJECT ${CORDBEE_SOURCES_WKS} ../${ARCH_SOURCES_DIR}/dbghelpers.S)
->>>>>>> Use interface libraries to localize changes to support object libraries on old CMake versions.
   else()
     message(FATAL_ERROR "Unknown platform")
   endif()
